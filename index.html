@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Drum Pad</title>
+    <link rel="stylesheet" href="stylesheet.css">
+    <script src="java.js" defer></script>
+</head>
+<body>
+    <div class="keys">
+        <div code="KeyA" class="key">
+            <kbd>A</kbd>
+            <span class="sound">clap</span>
+        </div>
+        <div code="KeyS" class="key">
+            <kbd>S</kbd>
+            <span class="sound">kick</span>
+        </div>
+        <div code="KeyD" class="key">
+            <kbd>D</kbd>
+            <span class="sound">hihat</span>
+        </div>
+        <div code="KeyF" class="key">
+            <kbd>F</kbd>
+            <span class="sound">snare</span>
+        </div>
+    </div>
+    <audio code="KeyA" src="sounds/clap.wav"></audio>
+    <audio code="KeyS" src="sounds/kick.wav"></audio>
+    <audio code="KeyD" src="sounds/hihat.wav"></audio>
+    <audio code="KeyF" src="sounds/snare.wav"></audio>
+s
+<script>
+    window.addEventListener('keydown', function(e) {
+        const audio = document.querySelector(`audio[code= "${e.code}"]`);
+        const div = document.querySelector(`div[code= "${e.code}"]`);
+        if(!audio) return; //stop the function from running all together
+        audio.currentTime = 0; // rewind to the start
+        audio.play();
+        div.classList.add("playing");       
+        /*div.addClass('playing');*/
+    })
+
+    function removeTransition(e) {
+        if (e.propertyName !== 'transform') return; //skip it if its not a transform
+        this.classList.remove('playing');
+    }
+
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+</script>
+</body>
+
+
+</html>
